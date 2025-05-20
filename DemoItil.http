@@ -1,0 +1,6 @@
+@DemoItil_HostAddress = http://localhost:5267
+
+GET {{DemoItil_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
