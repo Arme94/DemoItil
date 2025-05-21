@@ -1,4 +1,4 @@
-name: Build and Deploy with Podman Compose
+name: Build and Push to Docker Hub
 
 on:
   push:
@@ -12,33 +12,36 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v3
 
-      - name: Set up Podman
-        run: |
-          sudo apt update
-          sudo apt install -y podman python3-pip
-          pip install podman-compose
-
-      - name: Build image with Podman
-        run: podman build -t ${{ secrets.DOCKERHUB_USERNAME }}/demoitil:latest .
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
 
       - name: Login to Docker Hub
-        run: podman login -u ${{ secrets.DOCKERHUB_USERNAME }} -p ${{ secrets.DOCKERHUB_TOKEN }}
+        uses: docker/login-action@v3
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
 
-      - name: Push image
-        run: podman push ${{ secrets.DOCKERHUB_USERNAME }}/demoitil:latest
+      - name: Build and push Docker image
+        uses: docker/build-push-action@v5
+        with:
+          context: .
+          file: ./Dockerfile
+          push: true
+          tags: ${{ secrets.DOCKERHUB_USERNAME }}/demoitil:latest
 
   deploy:
     needs: build-and-push
     runs-on: self-hosted
 
     steps:
-      - name: Detener contenedor anterior
+      - name: Detener contenedor anterior si existe
         run: |
           podman stop demoitil || true
           podman rm demoitil || true
 
-      - name: Descargar la imagen
+      - name: Descargar la nueva imagen
         run: podman pull ${{ secrets.DOCKERHUB_USERNAME }}/demoitil:latest
 
-      - name: Ejecutar contenedor con podman-compose
-        run: podman compose up -d
+      - name: Ejecutar nuevo contenedor
+        run: |
+          podman run -d --name demoitil -p 8080:80 ${{ secrets.DOCKERHUB_USERNAME }}/demoitil:latest
