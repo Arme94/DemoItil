@@ -1,0 +1,6 @@
+services:
+  app:
+    image: arme94/demo-itil
+    ports:
+      - "3000:3000"
+    container_name: demo-itil-app
