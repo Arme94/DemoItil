@@ -35,10 +35,10 @@ jobs:
 
     steps:
       - name: Descargar la nueva imagen
-        run: docker pull ${{ secrets.DOCKERHUB_USERNAME }}/demoitil:latest
+        run: podman pull ${{ secrets.DOCKERHUB_USERNAME }}/demoitil:latest
 
       - name: Detener y eliminar contenedores previos
-        run: docker-compose down || true
+        run: podman compose down || true
 
       - name: Levantar con docker-compose
-        run: docker-compose up -d
+        run: podman compose up -d
