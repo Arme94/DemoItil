@@ -34,11 +34,14 @@ jobs:
     runs-on: self-hosted
 
     steps:
+      - name: Detener contenedor anterior si existe
+        run: |
+          podman stop demoitil || true
+          podman rm demoitil || true
+
       - name: Descargar la nueva imagen
-        run: podman pull docker.io/${{ secrets.DOCKERHUB_USERNAME }}/demoitil:latest
+        run: podman pull ${{ secrets.DOCKERHUB_USERNAME }}/demoitil:latest
 
-      - name: Detener y eliminar contenedores previos
-        run: podman compose down || true
-
-      - name: Levantar con docker-compose
-        run: podman compose up -d
+      - name: Ejecutar nuevo contenedor
+        run: |
+          podman run -d --name demoitil -p 8080:80 ${{ secrets.DOCKERHUB_USERNAME }}/demoitil:latest
