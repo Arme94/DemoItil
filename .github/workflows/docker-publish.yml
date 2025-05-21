@@ -30,15 +30,15 @@ jobs:
           tags: ${{ secrets.DOCKERHUB_USERNAME }}/demoitil:latest
 
   deploy:
-  needs: build-and-push
-  runs-on: self-hosted
+    needs: build-and-push
+    runs-on: self-hosted
 
-  steps:
-    - name: Descargar la nueva imagen
-      run: docker pull ${{ secrets.DOCKERHUB_USERNAME }}/demoitil:latest
+    steps:
+      - name: Descargar la nueva imagen
+        run: docker pull ${{ secrets.DOCKERHUB_USERNAME }}/demoitil:latest
 
-    - name: Detener y eliminar contenedores previos
-      run: docker-compose down || true
+      - name: Detener y eliminar contenedores previos
+        run: docker-compose down || true
 
-    - name: Levantar con docker-compose
-      run: docker-compose up -d
+      - name: Levantar con docker-compose
+        run: docker-compose up -d
