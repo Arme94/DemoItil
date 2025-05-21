@@ -41,4 +41,4 @@ jobs:
         run: podman pull ${{ secrets.DOCKERHUB_USERNAME }}/demoitil:latest
 
       - name: Ejecutar contenedor con podman-compose
-        run: podman-compose up -d
+        run: podman compose up -d
