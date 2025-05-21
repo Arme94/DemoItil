@@ -36,8 +36,8 @@ jobs:
     steps:
       - name: Detener contenedor anterior si existe
         run: |
-          podman stop demoitil || true
-          podman rm demoitil || true
+          podman stop demoitil
+          podman rm demoitil
 
       - name: Descargar la nueva imagen
         run: podman pull ${{ secrets.DOCKERHUB_USERNAME }}/demoitil:latest
