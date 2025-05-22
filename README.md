@@ -42,11 +42,13 @@ La aplicación estará disponible en:
 Nuestro pipeline de CI se ejecuta automáticamente en cada push al repositorio y realiza las siguientes tareas:
 
 1. **Validación de código**
+
    - Análisis estático de código
    - Verificación de estilo de código
    - Detección de vulnerabilidades
 
 2. **Pruebas automatizadas**
+
    - Ejecución de pruebas unitarias
    - Pruebas de integración
    - Generación de reportes de cobertura
@@ -61,10 +63,12 @@ Nuestro pipeline de CI se ejecuta automáticamente en cada push al repositorio y
 El proceso de CD se activa automáticamente después de un CI exitoso:
 
 1. **Ambiente de Desarrollo**
+
    - Despliegue automático al aprobar los tests
    - Validación de la API con pruebas de humo
 
 2. **Ambiente de Staging**
+
    - Despliegue manual con aprobación
    - Pruebas de integración completas
    - Validación de performance
@@ -118,6 +122,7 @@ El pipeline incluye monitoreo automático de:
 ## Documentación
 
 La documentación completa de la API está disponible en:
+
 - Swagger UI: `/swagger` (en modo desarrollo)
 - OpenAPI JSON: `/swagger/v1/swagger.json`
 
@@ -149,8 +154,8 @@ Este tutorial guía paso a paso el despliegue de una aplicación .NET Core como 
 ## 1️⃣ Crear la aplicación .NET
 
 ```bash
-dotnet new webapi -n GestionDespliegueApp
-cd GestionDespliegueApp
+dotnet new webapi -n DemoItil
+cd DemoItil
 ```
 
 ### En `Program.cs`, agrega:
@@ -165,7 +170,7 @@ Esto permite que el contenedor escuche desde fuera.
 
 ## 2️⃣ Crear el Dockerfile
 
-En la raíz del proyecto (`GestionDespliegueApp`), crea un archivo llamado `Dockerfile`:
+En la raíz del proyecto (`DemoItil`), crea un archivo llamado `Dockerfile`:
 
 ```Dockerfile
 FROM mcr.microsoft.com/dotnet/aspnet:8.0 AS base
@@ -180,7 +185,7 @@ RUN dotnet publish -c Release -o /app/publish
 FROM base AS final
 WORKDIR /app
 COPY --from=build /app/publish .
-ENTRYPOINT ["dotnet", "GestionDespliegueApp.dll"]
+ENTRYPOINT ["dotnet", "DemoItil.dll"]
 ```
 
 ---

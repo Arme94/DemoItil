@@ -82,7 +82,6 @@ jobs:
   deploy-to-production:
     name: Deploy to Production
     needs: build-and-push
-    runs-on: self-hosted
     if: github.ref == 'refs/heads/main'
 
     steps:
