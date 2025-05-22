@@ -142,6 +142,18 @@ Este tutorial guía paso a paso el despliegue de una aplicación .NET Core como 
 
 ---
 
+## ⚠️ Nota importante sobre este repositorio
+
+Este repositorio está disponible para que puedas probar el proceso de despliegue automatizado. Sin embargo, ten en cuenta:
+
+- **No realices pull directamente** sobre este proyecto
+- **Debes crear un fork** del repositorio para trabajar con él
+- Usa tu propio fork para realizar pruebas y modificaciones
+
+De esta manera podrás experimentar con el flujo completo de CI/CD sin afectar el repositorio original.
+
+---
+
 ## 🧱 Requisitos
 
 - [.NET 8 SDK](https://dotnet.microsoft.com/download)
