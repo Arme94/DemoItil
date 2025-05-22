@@ -1,7 +1,0 @@
-services:
-  demoitil:
-    image: arme94/demoitil
-    container_name: demoitil
-    ports:
-      - "8080:80"
-    restart: unless-stopped
