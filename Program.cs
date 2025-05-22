@@ -22,7 +22,6 @@ var summaries = new[]
     "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"
 };
 
-// Prácticas ITIL por categorías
 var practicasGestionGeneral = new Dictionary<string, string>
 {
     { "Gestión Estratégica", "Definir la dirección general de la organización de TI y cómo entregará valor" },
@@ -47,7 +46,6 @@ var practicasGestionTecnica = new Dictionary<string, string>
     { "Gestión de Seguridad", "Mantener la confidencialidad, integridad y disponibilidad de la información" }
 };
 
-// Lista de incidentes de ejemplo
 var incidents = new List<Incident>
 {
     new Incident(1, "Servidor caído", "Alta", "En progreso", "El servidor principal no responde", DateTime.Now.AddHours(-2)),
@@ -55,7 +53,6 @@ var incidents = new List<Incident>
     new Incident(3, "Lentitud en la red", "Baja", "Resuelto", "Los usuarios reportan lentitud en la conexión", DateTime.Now.AddDays(-1))
 };
 
-// Lista de servicios de ejemplo
 var services = new List<Service>
 {
     new Service(1, "Correo electrónico", "Activo", "Servicio de correo para toda la organización", 99.9m),
@@ -63,7 +60,6 @@ var services = new List<Service>
     new Service(3, "Sistema de tickets", "Mantenimiento", "Sistema para gestión de incidentes y peticiones", 98.0m)
 };
 
-// Lista de cambios de ejemplo
 var changes = new List<Change>
 {
     new Change(1, "Actualización SO", "Normal", "Aprobado", "Actualizar el sistema operativo a la última versión", "IT Operations", DateTime.Now.AddDays(7)),
@@ -71,7 +67,6 @@ var changes = new List<Change>
     new Change(3, "Migración Base de Datos", "Emergencia", "Implementado", "Migración urgente por fallo en servidor principal", "Infraestructura", DateTime.Now.AddDays(-1))
 };
 
-// Lista de elementos de configuración (CIs) de ejemplo
 var configurationItems = new List<ConfigurationItem>
 {
     new ConfigurationItem(1, "SRV-DB-001", "Servidor", "Producción", "Servidor de base de datos principal", "Dell PowerEdge R740", "IT Infrastructure"),
@@ -96,7 +91,6 @@ app.MapGet("/itil", () =>
 .WithName("GetItil")
 .WithOpenApi();
 
-// PRÁCTICAS DE GESTIÓN GENERAL
 app.MapGet("/itil/gestion-general", () =>
 {
     return practicasGestionGeneral;
@@ -119,7 +113,6 @@ app.MapGet("/itil/gestion-general/portfolio", () =>
 .WithOpenApi()
 .WithDescription("Obtiene la información del portafolio de proyectos");
 
-// PRÁCTICAS DE GESTIÓN DE SERVICIOS
 app.MapGet("/itil/gestion-servicios", () =>
 {
     return practicasGestionServicios;
@@ -144,7 +137,6 @@ app.MapGet("/itil/gestion-servicios/catalogo", () =>
 .WithOpenApi()
 .WithDescription("Obtiene el catálogo de servicios disponibles");
 
-// PRÁCTICAS DE GESTIÓN TÉCNICA
 app.MapGet("/itil/gestion-tecnica", () =>
 {
     return practicasGestionTecnica;
@@ -169,12 +161,10 @@ app.MapGet("/itil/gestion-tecnica/configuracion", () =>
 .WithOpenApi()
 .WithDescription("Obtiene todos los elementos de configuración");
 
-// Dashboard global de ITIL
 app.MapGet("/itil/dashboard", () =>
 {
     var now = DateTime.Now;
 
-    // Cálculo de KPIs de ejemplo
     var incidentesPendientes = incidents.Count(i => i.Status != "Resuelto");
     var incidentesUrgentes = incidents.Count(i => i.Priority == "Alta");
     var serviciosActivos = services.Count(s => s.Status == "Activo");
@@ -183,7 +173,6 @@ app.MapGet("/itil/dashboard", () =>
 
     var dashboard = new
     {
-        // KPIs por categoría
         GestionGeneral = new
         {
             ProyectosActivos = 3,
@@ -214,7 +203,6 @@ app.MapGet("/itil/dashboard", () =>
 
 app.Run();
 
-// Modelos de datos
 record WeatherForecast(DateOnly Date, int TemperatureC, string? Summary)
 {
     public int TemperatureF => 32 + (int)(TemperatureC / 0.5556);

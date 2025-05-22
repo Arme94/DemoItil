@@ -2,19 +2,23 @@
 
 ## Descripción
 
-DemoItil es una aplicación web ASP.NET Core 8.0 que ofrece un servicio de pronóstico del tiempo mediante una API REST. La aplicación ha sido desarrollada como parte de un proyecto académico para el curso de Gobierno de TI, centrado en prácticas ITIL.
+DemoItil es una aplicación web ASP.NET Core 8.0 que implementa una API REST para gestionar prácticas ITIL. La aplicación ha sido desarrollada como parte de un proyecto académico para el curso de Gobierno de TI, centrándose en las mejores prácticas de ITIL y DevOps.
 
 ## Características
 
-- API REST para consulta de pronóstico del tiempo
+- API REST para gestión de prácticas ITIL
+- Dashboard con KPIs de ITIL
+- Gestión de incidentes, servicios y cambios
 - Documentación de API mediante Swagger/OpenAPI
 - Diseño minimalista con Minimal APIs de .NET 8
-- Preparada para contenedores Docker
+- Pipeline de CI/CD automatizado
+- Despliegue containerizado con Docker
 
 ## Requisitos previos
 
 - [.NET SDK 8.0](https://dotnet.microsoft.com/download/dotnet/8.0)
-- [Docker](https://www.docker.com/) (opcional, para ejecución en contenedores)
+- [Docker](https://www.docker.com/)
+- [Git](https://git-scm.com/)
 
 ## Instalación y ejecución local
 
@@ -22,7 +26,7 @@ DemoItil es una aplicación web ASP.NET Core 8.0 que ofrece un servicio de pron�
 2. Navegar al directorio del proyecto
 3. Ejecutar la aplicación:
 
-```
+```bash
 dotnet run
 ```
 
@@ -31,34 +35,101 @@ La aplicación estará disponible en:
 - http://localhost:80 - Cuando se ejecuta localmente
 - https://localhost:443 - Para conexiones HTTPS
 
-## Endpoints de la API
+## Flujo de CI/CD
 
-- `GET /weatherforecast` - Devuelve un pronóstico del tiempo para los próximos 5 días
+### Integración Continua (CI)
 
-## Ejecución con Docker
+Nuestro pipeline de CI se ejecuta automáticamente en cada push al repositorio y realiza las siguientes tareas:
 
-El proyecto incluye un Dockerfile que permite construir y ejecutar la aplicación en un contenedor:
+1. **Validación de código**
+   - Análisis estático de código
+   - Verificación de estilo de código
+   - Detección de vulnerabilidades
 
-```
-# Construir la imagen
+2. **Pruebas automatizadas**
+   - Ejecución de pruebas unitarias
+   - Pruebas de integración
+   - Generación de reportes de cobertura
+
+3. **Construcción del artefacto**
+   - Compilación del proyecto
+   - Generación de imagen Docker
+   - Escaneo de seguridad de la imagen
+
+### Despliegue Continuo (CD)
+
+El proceso de CD se activa automáticamente después de un CI exitoso:
+
+1. **Ambiente de Desarrollo**
+   - Despliegue automático al aprobar los tests
+   - Validación de la API con pruebas de humo
+
+2. **Ambiente de Staging**
+   - Despliegue manual con aprobación
+   - Pruebas de integración completas
+   - Validación de performance
+
+3. **Ambiente de Producción**
+   - Despliegue manual con doble aprobación
+   - Monitoreo de métricas post-despliegue
+   - Rollback automatizado en caso de fallo
+
+## Trabajando con el Pipeline
+
+### Triggers del Pipeline
+
+- **Push a main**: Activa el pipeline completo
+- **Pull Request**: Ejecuta validaciones y pruebas
+- **Release Tag**: Inicia el proceso de despliegue a producción
+
+### Comandos útiles
+
+```bash
+# Construir la imagen localmente
 docker build -t demoitil .
 
-# Ejecutar el contenedor
+# Ejecutar contenedor local
 docker run -p 8080:80 demoitil
+
+# Ejecutar pruebas
+dotnet test
+
+# Validar el código
+dotnet format --verify-no-changes
 ```
 
-La aplicación estará disponible en http://localhost:8080
+## Monitoreo y Métricas
 
-## Documentación de la API
+El pipeline incluye monitoreo automático de:
 
-La documentación Swagger estará disponible en `/swagger` cuando la aplicación se ejecute en modo desarrollo.
+- Tiempo de construcción y despliegue
+- Cobertura de código
+- Vulnerabilidades detectadas
+- Performance de la aplicación
+- Disponibilidad del servicio
+
+## Endpoints de la API
+
+- `GET /itil/dashboard` - Dashboard general con KPIs
+- `GET /itil/gestion-servicios` - Prácticas de gestión de servicios
+- `GET /itil/gestion-tecnica` - Prácticas de gestión técnica
+- `GET /itil/gestion-general` - Prácticas de gestión general
+
+## Documentación
+
+La documentación completa de la API está disponible en:
+- Swagger UI: `/swagger` (en modo desarrollo)
+- OpenAPI JSON: `/swagger/v1/swagger.json`
 
 ## Tecnologías utilizadas
 
 - ASP.NET Core 8.0
-- Minimal APIs
-- Swagger/OpenAPI
+- GitHub Actions (CI/CD)
 - Docker
+- Swagger/OpenAPI
+- SonarCloud (Análisis de código)
+- Azure Container Registry
+- Kubernetes (Orquestación de contenedores)
 
 # 🚀 Tutorial de Despliegue Automatizado con Docker, GitHub Actions y Podman
 
