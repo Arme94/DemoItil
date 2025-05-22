@@ -82,10 +82,9 @@ jobs:
 
       - name: Test placeholder
         run: echo "Aquí se ejecutarán pruebas unitarias e integración en el futuro"
-
   build-and-push:
     name: Build and Push Docker Image
-    needs: test
+    needs: [test, sonarcloud-analysis]
     runs-on: ubuntu-latest
     if: github.event_name == 'push' && (github.ref == 'refs/heads/main' || github.ref == 'refs/heads/develop')
 
