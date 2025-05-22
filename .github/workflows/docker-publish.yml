@@ -11,8 +11,8 @@ env:
   IMAGE_TAG: ${{ github.sha }}
 
 jobs:
-  lint:
-    name: Lint Code
+  build:
+    name: Build Code
     runs-on: ubuntu-latest
 
     steps:
@@ -27,11 +27,36 @@ jobs:
       - name: Restore dependencies
         run: dotnet restore
 
-      - name: Run code analyzer
+      - name: Run code build
         run: dotnet build --no-restore --configuration Release
+
+  sonarcloud-analysis:
+    name: SonarCloud Analysis
+    needs: build
+    runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/main' || github.ref == 'refs/heads/develop'
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Set up Java (required by SonarScanner)
+        uses: actions/setup-java@v3
+        with:
+          java-version: "17"
+          distribution: "temurin"
+
+      - name: SonarCloud Scan
+        uses: SonarSource/sonarcloud-github-action@master
+        with:
+          organization: "arme94"
+          projectKey: "Arme94_DemoItil"
+        env:
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+
   test:
     name: Run Tests
-    needs: lint
+    needs: build
     runs-on: ubuntu-latest
 
     steps:
