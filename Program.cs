@@ -26,8 +26,7 @@ var practicasGestionGeneral = new Dictionary<string, string>
 {
     { "Gestión Estratégica", "Definir la dirección general de la organización de TI y cómo entregará valor" },
     { "Gestión de Portafolio", "Asegurar que la organización tenga la combinación correcta de programas, proyectos y servicios" },
-    { "Gestión Financiera", "Administrar el presupuesto, la contabilidad y la facturación de los servicios de TI" },
-    { "Gestión de Riesgos", "Identificar, evaluar y controlar riesgos para garantizar la continuidad del negocio" }
+    { "Gestión Financiera", "Administrar el presupuesto, la contabilidad y la facturación de los servicios de TI" }
 };
 
 var practicasGestionServicios = new Dictionary<string, string>
